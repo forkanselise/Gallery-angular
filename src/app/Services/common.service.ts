@@ -7,7 +7,8 @@ import { environment } from 'src/environments/environment';
 })
 export class CommonService {
 
-  mainApiUrl: string = environment.API_Url
+  // mainApiUrl: string = environment.API_Url
+  mainApiUrl = "http://localhost:3000/photos"
 
   constructor(
     private http: HttpClient
@@ -18,6 +19,7 @@ export class CommonService {
   }
 
   postPhotos(photos: any) {
+    console.log(photos)
     return this.http.post(this.mainApiUrl, photos)
   }
 }

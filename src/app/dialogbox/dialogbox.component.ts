@@ -73,13 +73,14 @@ export class DialogboxComponent implements OnInit {
 
     // this.log();
   }
-  
+
 
   uploadNow() {
     this.isLoading = true;
+
     this.readyForUploadItems.forEach(res => {
       this.commonService.postPhotos(res).subscribe()
-    });
+    })
     this.isLoading=false;
   }
 

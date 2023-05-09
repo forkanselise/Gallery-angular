@@ -5,5 +5,7 @@
 <!-- <input type="file" accept="image/png, image/jpeg" (change)="picked($event)"> -->
 <input style="margin-bottom: 16px;" type="file" accept="image/png, image/jpeg" [multiple]="true" (change)="picked($event)">
 
-<button mat-raised-button (click)="uploadNow()">Upload Now</button>
-<mat-progress-spinner *ngIf="isLoading" [diameter]="20"></mat-progress-spinner>
+<div fxLayout="row" fxLayoutAlign="end center">
+  <button mat-raised-button (click)="uploadNow()">Upload Now</button>
+  <mat-spinner *ngIf="isLoading" style="margin-left: 15px;" [diameter]="20"></mat-spinner>
+</div>
