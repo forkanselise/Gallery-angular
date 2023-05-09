@@ -9,12 +9,14 @@ import { LoginComponent } from './login/login.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { MaterialModule } from './material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DialogboxComponent } from './dialogbox/dialogbox.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    GalleryComponent
+    GalleryComponent,
+    DialogboxComponent
   ],
   imports: [
     BrowserModule,
