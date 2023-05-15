@@ -4,7 +4,8 @@
 
 export const environment = {
   production: true,
-  API_Url: 'https://mygalleyservice.onrender.com/photos'
+  API_Url: 'https://mygalleyservice.onrender.com/photos',
+  API_Url_Wedding : "https://mygalleyservice.onrender.com/wedding-photos"
 };
 
 /*

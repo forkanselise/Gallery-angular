@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CommonService } from '../Services/common.service';
+import { ImgbbService } from '../Services/imgbb.service';
 
 @Component({
   selector: 'app-dialogbox',
@@ -24,7 +25,8 @@ export class DialogboxComponent implements OnInit {
     private dialog: MatDialog,
     private dialogRef: MatDialogRef<DialogboxComponent>,
     private fb: FormBuilder,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private imgbbService: ImgbbService
   ) { }
 
   ngOnInit(): void {
@@ -47,6 +49,24 @@ export class DialogboxComponent implements OnInit {
     }
   }
 
+  uploadToImgbb(data: any){
+
+    let responseObject: any;
+
+    this.imgbbService.uploadImage(data.Image).subscribe(res => {
+      console.log("Upload Response = ", res);
+
+      if(res){
+        responseObject = res;
+        console.log(data)
+        data['Image'] = (responseObject.data.url)
+        data['Name'] = responseObject.data.image.filename;
+        console.log("Data before post in mongodb  = ",data)
+        this.commonService.postPhotos(data).subscribe()
+      }
+      // this.commonService.postPhotos(res?.Data).subscribe()
+    })
+  }
 
   handleInputChange(files:any) {
     var file = files;
@@ -75,11 +95,15 @@ export class DialogboxComponent implements OnInit {
   }
 
 
+
+
   uploadNow() {
     this.isLoading = true;
 
     this.readyForUploadItems.forEach(res => {
-      this.commonService.postPhotos(res).subscribe()
+      // this.commonService.postPhotos(res).subscribe()
+      this.uploadToImgbb(res)
+      console.log(res)
     })
     this.isLoading=false;
   }
