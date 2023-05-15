@@ -7,7 +7,8 @@ import { environment } from 'src/environments/environment';
 })
 export class CommonService {
 
-  connectionUrl = "http://localhost:3000/"
+  // connectionUrl = "http://localhost:3000/"
+  connectionUrl = environment.API_Url
   // mainApiUrl: string = environment.API_Url
   mainApiUrl = "http://localhost:3000/photos"
 
@@ -23,7 +24,7 @@ export class CommonService {
   }
 
   verification(data: string){
-    return this.http.post(this.loginVerify, data);
+    return this.http.post(environment.LoginVerify, data);
   }
 
   postPhotos(photos: any, param: string) {
