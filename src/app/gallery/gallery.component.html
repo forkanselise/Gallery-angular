@@ -1,7 +1,16 @@
 <div class="Gallery-layout">
 
-  <button mat-raised-button (click)="openDialog()">Upload Photos</button>
+  <button mat-raised-button (click)="openDialog(false)">Upload Photos</button>
 
+  <button mat-raised-button (click)="openDialog(true)">Upload Wedding Photos</button>
   <!-- <img src="https://i.ibb.co/Sn87hz9/09a2826e2ef0.jpg" alt=""> -->
+  <div *ngFor="let item of myGallery">
+    <img [src]="item.Image" alt="">
+    <!-- <pre>{{item['Name']}}</pre> -->
+    <!-- <pre>{{item | json}}</pre> -->
+  </div>
+
+  <button mat-raised-button (click)="showWedding()"> Show Wedding Gallery</button>
+  <button mat-raised-button (click)="showBasic()"> Show Basic Gallery</button>
 
 </div>

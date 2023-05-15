@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CommonService } from '../Services/common.service';
 import { ImgbbService } from '../Services/imgbb.service';
+import { Inject } from '@angular/core';
 
 @Component({
   selector: 'app-dialogbox',
@@ -21,7 +22,10 @@ export class DialogboxComponent implements OnInit {
   isLoading: boolean = false;
   cnt = 0;
 
+  databaseCollection: string = 'photos'
+
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private dialog: MatDialog,
     private dialogRef: MatDialogRef<DialogboxComponent>,
     private fb: FormBuilder,
@@ -30,6 +34,11 @@ export class DialogboxComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.data)
+    if(this.data.isWedding){
+      this.databaseCollection='wedding-photos'
+    }
+    console.log(this.databaseCollection)
   }
 
   public picked(event:any) {
@@ -62,7 +71,7 @@ export class DialogboxComponent implements OnInit {
         data['Image'] = (responseObject.data.url)
         data['Name'] = responseObject.data.image.filename;
         console.log("Data before post in mongodb  = ",data)
-        this.commonService.postPhotos(data).subscribe()
+        this.commonService.postPhotos(data,this.databaseCollection).subscribe()
       }
       // this.commonService.postPhotos(res?.Data).subscribe()
     })

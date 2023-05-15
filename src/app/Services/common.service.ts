@@ -7,19 +7,28 @@ import { environment } from 'src/environments/environment';
 })
 export class CommonService {
 
+  connectionUrl = "http://localhost:3000/"
   // mainApiUrl: string = environment.API_Url
   mainApiUrl = "http://localhost:3000/photos"
+
+  loginVerify = "http://localhost:3000/login"
 
   constructor(
     private http: HttpClient
   ) { }
 
-  getPhotos(){
-    return this.http.get(this.mainApiUrl);
+  getPhotos(param: string){
+    const currentUrl = this.connectionUrl + param
+    return this.http.get(currentUrl);
   }
 
-  postPhotos(photos: any) {
+  verification(data: string){
+    return this.http.post(this.loginVerify, data);
+  }
+
+  postPhotos(photos: any, param: string) {
+    const currentUrl = this.connectionUrl + param
     console.log(photos)
-    return this.http.post(this.mainApiUrl, photos)
+    return this.http.post(currentUrl, photos)
   }
 }

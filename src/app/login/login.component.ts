@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CommonService } from '../Services/common.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private commonService: CommonService
   ) { }
 
   ngOnInit(): void {
@@ -26,7 +28,16 @@ export class LoginComponent implements OnInit {
   loggedIn() {
     console.log(this.loginInfo?.value)
     // this.router.navigate.['gallery'];
-    this.router.navigateByUrl('/gallery')
+    this.commonService.verification(this.loginInfo?.value).subscribe(res=>{
+      console.log(res);
+      if(res){
+        this.router.navigateByUrl('/gallery')
+      }
+      else{
+        alert("Password Incorrect")
+      }
+    })
+
   }
 
 

@@ -18,18 +18,29 @@ export class GalleryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadGallery()
+    this.showBasic()
   }
 
-  loadGallery() {
-    this.commonService.getPhotos().subscribe(res => {
+  loadGallery(galleryType: string) {
+    this.myGallery.splice(0);
+    this.commonService.getPhotos(galleryType).subscribe(res => {
       this.myGallery = res;
       console.log(this.myGallery);
     })
   }
 
-  openDialog() {
-    this.dialog.open(DialogboxComponent)
+  openDialog(isWedding: boolean) {
+    this.dialog.open(DialogboxComponent, {
+      data: {'isWedding': isWedding}
+    })
+  }
+
+  showWedding(){
+    this.loadGallery('wedding-photos')
+  }
+
+  showBasic() {
+    this.loadGallery('photos')
   }
 
 }
