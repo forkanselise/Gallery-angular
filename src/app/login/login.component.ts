@@ -11,6 +11,7 @@ import { CommonService } from '../Services/common.service';
 export class LoginComponent implements OnInit {
 
   loginInfo!: FormGroup;
+  waiting: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -26,10 +27,14 @@ export class LoginComponent implements OnInit {
   }
 
   loggedIn() {
+    this.waiting = true;
     console.log(this.loginInfo?.value)
     // this.router.navigate.['gallery'];
+    this.loginInfo.get('Password')?.setValue(this.loginInfo.value.Password.toLowerCase());
+    // console.log(this.loginInfo.value);
     this.commonService.verification(this.loginInfo?.value).subscribe(res=>{
       console.log(res);
+      this.waiting = false;
       if(res){
         this.router.navigateByUrl('/gallery')
       }

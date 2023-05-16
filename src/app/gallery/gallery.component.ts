@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogboxComponent } from '../dialogbox/dialogbox.component';
 import { CommonService } from '../Services/common.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-gallery',
@@ -14,11 +15,16 @@ export class GalleryComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.showBasic()
+  }
+
+  showImage(imageUrl: string) {
+    console.log(imageUrl);
   }
 
   loadGallery(galleryType: string) {
@@ -32,6 +38,13 @@ export class GalleryComponent implements OnInit {
   openDialog(isWedding: boolean) {
     this.dialog.open(DialogboxComponent, {
       data: {'isWedding': isWedding}
+    }).afterClosed().subscribe(res => {
+      if(res == 'photos'){
+        this.showBasic();
+      }
+      else{
+        this.showWedding();
+      }
     })
   }
 

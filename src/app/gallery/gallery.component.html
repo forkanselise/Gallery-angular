@@ -1,18 +1,37 @@
-<div class="Gallery-layout">
 
-  <button mat-raised-button (click)="openDialog(false)">Upload Photos</button>
+<header class="navbar-top" fxLayoutAlign="center center">
+  <div>Prianka Rani</div>
+</header>
 
-  <button mat-raised-button (click)="openDialog(true)">Upload Wedding Photos</button>
 
-  <button mat-raised-button (click)="showWedding()"> Show Wedding Gallery</button>
-  <button mat-raised-button (click)="showBasic()"> Show Basic Gallery</button>
-  <!-- <img src="https://i.ibb.co/Sn87hz9/09a2826e2ef0.jpg" alt=""> -->
-  <div *ngFor="let item of myGallery">
-    <img [src]="item.Image" alt="">
-    <!-- <pre>{{item['Name']}}</pre> -->
-    <!-- <pre>{{item | json}}</pre> -->
+
+<div class="page-layout" >
+
+  <div style="margin-bottom: 20px;" fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutGap="20px">
+    <button mat-raised-button (click)="openDialog(false)">Upload Photos</button>
+
+    <button mat-raised-button (click)="openDialog(true)">Upload Wedding Photos</button>
+
+    <button mat-raised-button (click)="showWedding()"> Show Wedding Gallery</button>
+    <button mat-raised-button (click)="showBasic()"> Show Basic Gallery</button>
   </div>
 
 
+  <div class="group-image"fxLayout="row" fxLayoutAlign="start center">
+
+    <div class="image-box" fxFlex="24" fxFlex.gt-lg="10" fxFlex.md="49" fxFlex.sm="99" fxFlex.xs="99" flexLayout="column" flexLayoutAlig="center center" *ngFor="let item of myGallery ; index as i">
+
+      <a [href]="item.Image">
+        <img [src]="item.Image" alt="">
+      </a>
+
+    </div>
+
+  </div>
 
 </div>
+
+
+<footer class="navbar-top " fxLayoutAlign="center center">
+  Copyright &copy; 2022
+</footer>

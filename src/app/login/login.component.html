@@ -1,7 +1,7 @@
 
 <div class="login-layout" fxLayoutAlign="center center" fxFlex="100">
 
-  <div fxLayout="column" fxFlex="40" fxFlex.lt-md="90" [formGroup]="loginInfo">
+  <div fxLayout="column" fxFlex="40" fxFlex.lt-md="90" [formGroup]="loginInfo" fxLayoutGap="8px">
     <div fxlex="100" style="margin-top:40px;" fxLayoutAlign="center center" >
       <h2>Noob's Gallery</h2>
     </div>
@@ -16,5 +16,8 @@
     </mat-form-field>
 
     <button (click)="loggedIn()" mat-raised-button>LOGIN</button>
+    <div fxFlex="100" fxLayoutAlign="center center">
+      <mat-spinner *ngIf="waiting" [diameter]="30"></mat-spinner>
+    </div>
   </div>
 </div>

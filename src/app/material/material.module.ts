@@ -17,6 +17,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import {MatGridListModule} from '@angular/material/grid-list';
 
 
 const Material = [
@@ -37,7 +38,8 @@ const Material = [
   MatDividerModule,
   MatPaginatorModule,
   MatSnackBarModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatGridListModule
 ];
 
 

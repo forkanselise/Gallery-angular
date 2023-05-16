@@ -1,14 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { take } from 'rxjs';
-import { Upload } from 'upload-js';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ImgbbService {
 
-  private readonly imgbbApi = "https://api.imgbb.com/1/upload?expiration=60000&key=9cb38282f818ea1e4b447b6263de9fe9";
+  private readonly imgbbApi = "https://api.imgbb.com/1/upload?expiration=600000&key=f74935e42933d6604c4bba6bb06244b4";
 
   constructor(
     private http: HttpClient

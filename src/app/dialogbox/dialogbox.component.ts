@@ -24,6 +24,10 @@ export class DialogboxComponent implements OnInit {
 
   databaseCollection: string = 'photos'
 
+  buttonDisable: boolean = true;
+
+  numberofPhotos: number = 0;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialog: MatDialog,
@@ -43,18 +47,23 @@ export class DialogboxComponent implements OnInit {
 
   public picked(event:any) {
     // this.currentId = field;
+    this.isLoading = true;
     this.readyForUploadItems.splice(0);
     let fileList: FileList = event.target.files;
     if (fileList.length > 0) {
       // const file: File = fileList[0];
       // this.sellersPermitFile = file;
+      this.numberofPhotos = fileList.length
       for(let i=0; i<fileList.length; i++) {
         const file: File = fileList[i];
         this.handleInputChange(file);
       }
       // this.handleInputChange(file); //turn into base64
       console.log(this.readyForUploadItems)
-
+      setTimeout(()=>{
+        this.isLoading = false;
+        this.buttonDisable = false;
+      }, 1500)
     }
   }
 
@@ -66,12 +75,14 @@ export class DialogboxComponent implements OnInit {
       console.log("Upload Response = ", res);
 
       if(res){
-        responseObject = res;
-        console.log(data)
-        data['Image'] = (responseObject.data.url)
-        data['Name'] = responseObject.data.image.filename;
-        console.log("Data before post in mongodb  = ",data)
-        this.commonService.postPhotos(data,this.databaseCollection).subscribe()
+        setTimeout(()=> {
+          responseObject = res;
+          console.log(data)
+          data['Image'] = (responseObject.data.url)
+          data['Name'] = responseObject.data.image.filename;
+          console.log("Data before post in mongodb  = ",data)
+          this.commonService.postPhotos(data,this.databaseCollection).subscribe()
+        },200)
       }
       // this.commonService.postPhotos(res?.Data).subscribe()
     })
@@ -108,13 +119,20 @@ export class DialogboxComponent implements OnInit {
 
   uploadNow() {
     this.isLoading = true;
+    this.buttonDisable = true;
+    console.log(this.isLoading)
 
     this.readyForUploadItems.forEach(res => {
       // this.commonService.postPhotos(res).subscribe()
       this.uploadToImgbb(res)
       console.log(res)
-    })
-    this.isLoading=false;
+    });
+
+    setTimeout(()=>{
+      this.isLoading = false;
+      this.buttonDisable = false;
+      this.dialogRef.close(this.databaseCollection)
+    },this.numberofPhotos *210)
   }
 
 }
