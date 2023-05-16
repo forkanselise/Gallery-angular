@@ -115,6 +115,9 @@ export class DialogboxComponent implements OnInit {
   }
 
 
+  cancelUpload(){
+    this.dialog.closeAll()
+  }
 
 
   uploadNow() {

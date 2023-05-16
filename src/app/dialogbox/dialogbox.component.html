@@ -1,10 +1,14 @@
-<div style="text-transform: capitalize; font-size: 20px; font-weight: 700; padding-bottom: 24px;">Upload {{databaseCollection}}</div>
+<div fxLayoutAlign="space-between center" style="text-transform: capitalize; font-size: 20px; font-weight: 700; padding-bottom: 24px;">
+  <div>Upload {{databaseCollection}}</div>
+  <mat-icon style="transform: scale(.8); color: red; cursor: pointer;" (click)="cancelUpload()">close</mat-icon>
+</div>
 
 
 <!-- <input type="file" accept="image/png, image/jpeg" (change)="picked($event)"> -->
 <input style="margin-bottom: 16px;" type="file" accept="image/png, image/jpeg" [multiple]="true" (change)="picked($event)">
 
-<div fxLayout="row" fxLayoutAlign="end center">
+<div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+  <button mat-raised-button (click)="cancelUpload()">Cancel</button>
   <button mat-raised-button (click)="uploadNow()" class="upload-button" [disabled]="buttonDisable">Upload Now</button>
   <mat-spinner *ngIf="isLoading" style="margin-left: 15px;" [diameter]="20"></mat-spinner>
 </div>
