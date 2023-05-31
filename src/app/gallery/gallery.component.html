@@ -22,7 +22,8 @@
     <div class="image-box" fxFlex="24" fxFlex.gt-lg="10" fxFlex.md="49" fxFlex.sm="99" fxFlex.xs="99" flexLayout="column" flexLayoutAlig="center center" *ngFor="let item of myGallery ; index as i">
 
       <a [href]="item.Image">
-        <img [src]="item.Image" alt="">
+        <video *ngIf="item.Name==='video'" src="item.Image"></video>
+        <img  [src]="item.Image" alt="">
       </a>
 
     </div>

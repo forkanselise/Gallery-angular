@@ -107,6 +107,9 @@ export class DialogboxComponent implements OnInit {
 
           for(let image of res) {
             this.PhotoInfo.get('Image')?.setValue(image.url);
+            this.PhotoInfo.get('Name')?.setValue(image.resource_type);
+            // debugger
+            console.log(image.resource_type, this.PhotoInfo.value)
     //   this.readyForUploadItems
             dbUploadList.push(this.commonService.postPhotos(this.PhotoInfo.value, this.databaseCollection))
           }
