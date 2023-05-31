@@ -16,6 +16,8 @@ export class GalleryComponent implements OnInit {
   public startedPlay:boolean = false;
   public show:boolean = false;
 
+  currentRunningVideo: any[]=[];
+
   constructor(
     private dialog: MatDialog,
     private commonService: CommonService,
@@ -29,10 +31,19 @@ export class GalleryComponent implements OnInit {
 
 pauseVideo(videoplayer: any)
 {
+  // console.log(videoplayer)
+  // if(this.currentRunningVideo?.length>0) {
+  //   this.currentRunningVideo[0].nativeElement.pause();
+  //   this.show = !this.show;
+  // }
+
+  // this.currentRunningVideo.splice(0);
+  // this.currentRunningVideo.push(videoplayer);
+
   videoplayer.nativeElement.play();
-  // this.startedPlay = true;
-  // if(this.startedPlay == true)
-  // {
+  this.startedPlay = true;
+  if(this.startedPlay == true)
+  {
      setTimeout(() =>
      {
       videoplayer.nativeElement.pause();
@@ -40,8 +51,8 @@ pauseVideo(videoplayer: any)
       {
         this.show = !this.show;
       }
-     }, 5000);
-  // }
+     }, 500);
+  }
 }
 
 closebutton(videoplayer : any){

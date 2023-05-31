@@ -24,7 +24,7 @@
       <a [href]="item.Image">
         <!-- <video *ngIf="item.Name==='video'" src="item.Image"></video> -->
 
-        <video *ngIf="item.Name ==='video' else image" fxFlex="100" controls (canplay)="pauseVideo(videoplayer)" #videoPlayer>
+        <video *ngIf="item.Name ==='video' else image" fxFlex="100" controls preload="none" (canplay)="pauseVideo(videoplayer)" #videoPlayer>
           <source [src]="item.Image">
         </video>
         <ng-template #image>
