@@ -27,6 +27,13 @@ export class CloudinaryService {
 
   UploadImage(data: File){
     console.log(data);
+    // let uploadUrl = environment.cloudinaryApi
+
+    // if(data.type.includes('video')){
+    //   console.log(data.type)
+    //   uploadUrl = environment.cloudinaryApiVideo
+    // }
+
     let formData = new FormData();
 
     // for(let i=0; i < data.length; i++){
@@ -36,6 +43,8 @@ export class CloudinaryService {
     formData.append('file',data);
 
     // }
+
+    console.log(formData)
 
     return this.http.post(environment.cloudinaryApi,formData)
 

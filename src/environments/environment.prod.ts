@@ -5,5 +5,5 @@ export const environment = {
   LoginVerify : "https://mygalleyservice.onrender.com/login",
   cloudinary_api_key: "851827938257399",
   upload_preset: "mbmywdwu",
-  cloudinaryApi: "https://api.cloudinary.com/v1_1/demo/image/upload"
+  cloudinaryApi: "https://api.cloudinary.com/v1_1/demo/auto/upload"
 };
