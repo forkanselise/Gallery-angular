@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogboxComponent } from '../dialogbox/dialogbox.component';
 import { CommonService } from '../Services/common.service';
@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
 export class GalleryComponent implements OnInit {
 
   myGallery: any = [];
+  @ViewChild('videoPlayer') videoplayer: any;
+  public startedPlay:boolean = false;
+  public show:boolean = false;
 
   constructor(
     private dialog: MatDialog,
@@ -22,6 +25,29 @@ export class GalleryComponent implements OnInit {
   ngOnInit(): void {
     this.showBasic()
   }
+
+
+pauseVideo(videoplayer: any)
+{
+  videoplayer.nativeElement.play();
+  // this.startedPlay = true;
+  // if(this.startedPlay == true)
+  // {
+     setTimeout(() =>
+     {
+      videoplayer.nativeElement.pause();
+       if(videoplayer.nativeElement.paused)
+      {
+        this.show = !this.show;
+      }
+     }, 5000);
+  // }
+}
+
+closebutton(videoplayer : any){
+  this.show = !this.show;
+  videoplayer.nativeElement.play();
+}
 
   showImage(imageUrl: string) {
     console.log(imageUrl);
