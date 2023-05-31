@@ -5,7 +5,7 @@ import { CommonService } from '../Services/common.service';
 import { ImgbbService } from '../Services/imgbb.service';
 import { Inject } from '@angular/core';
 import { CloudinaryService } from '../Services/cloudinary.service';
-import { combineLatest } from 'rxjs';
+import { combineLatest, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-dialogbox',
@@ -53,6 +53,7 @@ export class DialogboxComponent implements OnInit {
     // this.currentId = field;
     // this.isLoading = true;
     this.readyForUploadItems.splice(0);
+    this.fileList.splice(0)
     this.fileList = event.target.files;
     // this.readyForUploadItems = fileList
 
@@ -101,13 +102,21 @@ export class DialogboxComponent implements OnInit {
           console.log(res);
           this.isLoading = false
           this.buttonDisable = false;
+
+          let dbUploadList: any[] = [];
+
           for(let image of res) {
             this.PhotoInfo.get('Image')?.setValue(image.url);
     //   this.readyForUploadItems
-            this.commonService.postPhotos(this.PhotoInfo.value, this.databaseCollection).subscribe(res => {
-              console.log(res);
-            });
+            dbUploadList.push(this.commonService.postPhotos(this.PhotoInfo.value, this.databaseCollection))
           }
+
+          forkJoin(dbUploadList).subscribe((res2: any) => {
+            console.log(res2);
+            this.dialogRef.close(this.databaseCollection)
+          })
+
+
         })
 
     // return myuploadPromise
