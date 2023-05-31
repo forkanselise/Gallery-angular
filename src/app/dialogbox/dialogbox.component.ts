@@ -4,6 +4,8 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { CommonService } from '../Services/common.service';
 import { ImgbbService } from '../Services/imgbb.service';
 import { Inject } from '@angular/core';
+import { CloudinaryService } from '../Services/cloudinary.service';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-dialogbox',
@@ -24,9 +26,10 @@ export class DialogboxComponent implements OnInit {
 
   databaseCollection: string = 'photos'
 
-  buttonDisable: boolean = true;
+  buttonDisable: boolean = false;
 
   numberofPhotos: number = 0;
+  fileList: File[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -34,7 +37,8 @@ export class DialogboxComponent implements OnInit {
     private dialogRef: MatDialogRef<DialogboxComponent>,
     private fb: FormBuilder,
     private commonService: CommonService,
-    private imgbbService: ImgbbService
+    private imgbbService: ImgbbService,
+    private cloudinaryService: CloudinaryService
   ) { }
 
   ngOnInit(): void {
@@ -45,74 +49,29 @@ export class DialogboxComponent implements OnInit {
     console.log(this.databaseCollection)
   }
 
-  public picked(event:any) {
+  public picked(event: any) {
     // this.currentId = field;
-    this.isLoading = true;
+    // this.isLoading = true;
     this.readyForUploadItems.splice(0);
-    let fileList: FileList = event.target.files;
-    if (fileList.length > 0) {
-      // const file: File = fileList[0];
-      // this.sellersPermitFile = file;
-      this.numberofPhotos = fileList.length
-      for(let i=0; i<fileList.length; i++) {
-        const file: File = fileList[i];
-        this.handleInputChange(file);
-      }
-      // this.handleInputChange(file); //turn into base64
-      console.log(this.readyForUploadItems)
-      setTimeout(()=>{
-        this.isLoading = false;
-        this.buttonDisable = false;
-      }, 1500)
-    }
+    this.fileList = event.target.files;
+    // this.readyForUploadItems = fileList
+
+
+
+    // this.fileList = event.target.files;
+    // if(fileList?.length>0){
+    //   // this.cloudinaryService.UploadImage(fileList).subscribe(res => {
+    //   //   console.log("uploaded = ",res);
+    //   // })
+
+    // }
+    // this.isLoading = false;
   }
 
-  uploadToImgbb(data: any){
 
-    let responseObject: any;
 
-    this.imgbbService.uploadImage(data.Image).subscribe(res => {
-      console.log("Upload Response = ", res);
 
-      if(res){
-        setTimeout(()=> {
-          responseObject = res;
-          console.log(data)
-          data['Image'] = (responseObject.data.url)
-          data['Name'] = responseObject.data.image.filename;
-          console.log("Data before post in mongodb  = ",data)
-          this.commonService.postPhotos(data,this.databaseCollection).subscribe()
-        },200)
-      }
-      // this.commonService.postPhotos(res?.Data).subscribe()
-    })
-  }
 
-  handleInputChange(files:any) {
-    var file = files;
-    var pattern = /image-*/;
-    var reader = new FileReader();
-    if (!file.type.match(pattern)) {
-      alert('invalid format');
-      return;
-    }
-    reader.onloadend = this._handleReaderLoaded.bind(this);
-    reader.readAsDataURL(file);
-  }
-  _handleReaderLoaded(e:any) {
-    let reader = e.target;
-    var base64result = reader.result.substr(reader.result.indexOf(',') + 1);
-    //this.imageSrc = base64result;
-    // let id = this.currentId;
-    this.cnt++;
-    // console.log(this.cnt," = ",base64result);
-
-    this.PhotoInfo.get('Image')?.setValue(base64result);
-
-    this.readyForUploadItems.push(this.PhotoInfo.value);
-
-    // this.log();
-  }
 
 
   cancelUpload(){
@@ -125,17 +84,44 @@ export class DialogboxComponent implements OnInit {
     this.buttonDisable = true;
     console.log(this.isLoading)
 
-    this.readyForUploadItems.forEach(res => {
-      // this.commonService.postPhotos(res).subscribe()
-      this.uploadToImgbb(res)
-      console.log(res)
-    });
+    // for(let file of this.fileList) {
+    //   this.PhotoInfo.get('Image')?.setValue()
+    //   this.readyForUploadItems
+    // }
 
-    setTimeout(()=>{
-      this.isLoading = false;
-      this.buttonDisable = false;
-      this.dialogRef.close(this.databaseCollection)
-    },this.numberofPhotos *210)
+    console.log(this.fileList)
+    let cnt = 0;
+
+    let callList:any[] = [];
+        for(let image of this.fileList){
+          callList.push(this.cloudinaryService.UploadImage(image));
+        };
+
+        combineLatest(callList).subscribe((res:any)=>{
+          console.log(res);
+          this.isLoading = false
+          this.buttonDisable = false;
+          for(let image of res) {
+            this.PhotoInfo.get('Image')?.setValue(image.url);
+    //   this.readyForUploadItems
+            this.commonService.postPhotos(this.PhotoInfo.value, this.databaseCollection).subscribe(res => {
+              console.log(res);
+            });
+          }
+        })
+
+    // return myuploadPromise
+    // .then(res => {
+    //   console.log(res);
+    //   this.isLoading = false
+    //   this.buttonDisable = false
+    // })
+
+    // setTimeout(()=>{
+    //   this.isLoading = false;
+    //   this.buttonDisable = false;
+    //   this.dialogRef.close(this.databaseCollection)
+    // },this.numberofPhotos *210)
   }
 
 }

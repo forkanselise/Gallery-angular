@@ -13,6 +13,8 @@ export class LoginComponent implements OnInit {
   loginInfo!: FormGroup;
   waiting: boolean = false;
 
+  hide: boolean = true;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,

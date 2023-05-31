@@ -12,7 +12,10 @@
 
     <mat-form-field fxlex="100" appearance="outline">
       <mat-label>Password</mat-label>
-      <input formControlName="Password" type="text" matInput>
+      <input formControlName="Password"  [type]="hide ? 'password' : 'text'" matInput>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
     </mat-form-field>
 
     <button (click)="loggedIn()" mat-raised-button>LOGIN</button>

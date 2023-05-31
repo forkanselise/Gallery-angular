@@ -11,6 +11,7 @@ import { MaterialModule } from './material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogboxComponent } from './dialogbox/dialogbox.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CloudinaryModule } from '@cloudinary/ng';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { HttpClientModule } from '@angular/common/http';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CloudinaryModule
   ],
   providers: [],
   bootstrap: [AppComponent]
