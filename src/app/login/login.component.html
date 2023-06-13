@@ -1,18 +1,18 @@
 
 <div class="login-layout" fxLayoutAlign="center center" fxFlex="100">
 
-  <img class="login-image" src="assets/forkanpriya.jpg" alt="">
+  <img class="login-image" src="assets/forkanpriya" alt="">
 
   <div class="input-field" fxLayout="column" fxFlex="40" fxFlex.lt-md="90" [formGroup]="loginInfo" fxLayoutGap="8px">
-    <div fxlex="100" style="margin-top:40px;" fxLayoutAlign="center center" >
-      <h2>Rani's Gallery</h2>
+    <div fxFlex="100" style="margin-top:40px;" fxLayoutAlign="center center" >
+      <h2>Forkan's Gallery</h2>
     </div>
-    <mat-form-field fxlex="100" appearance="outline">
+    <mat-form-field fxFlex="100" appearance="outline">
       <mat-label>Username</mat-label>
       <input formControlName="Username" type="text" matInput>
     </mat-form-field>
 
-    <mat-form-field fxlex="100" appearance="outline">
+    <mat-form-field fxFlex="100" appearance="outline">
       <mat-label>Password</mat-label>
       <input formControlName="Password"  [type]="hide ? 'password' : 'text'" matInput>
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
@@ -20,9 +20,13 @@
         </button>
     </mat-form-field>
 
-    <button (click)="loggedIn()" mat-raised-button>LOGIN</button>
-    <div fxFlex="100" fxLayoutAlign="center center">
-      <mat-spinner *ngIf="waiting" [diameter]="30"></mat-spinner>
+    <div fxLayout="row" fxFlex="100" fxLayoutAlign="start center" fxLayoutGap="8px">
+      <button (click)="loggedIn()" fxLayoutAlign="center center" mat-raised-button>LOGIN</button>
+      <button mat-raised-button fxLayoutAlign="center center" (click)="registerUser()">Register User</button>
+      <div fxFlex="100" fxLayoutAlign="center center">
+        <mat-spinner *ngIf="waiting" [diameter]="30"></mat-spinner>
+      </div>
     </div>
+
   </div>
 </div>

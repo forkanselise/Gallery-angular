@@ -10,8 +10,10 @@ import { GalleryComponent } from './gallery/gallery.component';
 import { MaterialModule } from './material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogboxComponent } from './dialogbox/dialogbox.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CloudinaryModule } from '@cloudinary/ng';
+import { AuthGuard } from './auth.guard';
+import { TokenInterceptorService } from './token-interceptor.service';
 
 
 @NgModule({
@@ -30,9 +32,13 @@ import { CloudinaryModule } from '@cloudinary/ng';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    CloudinaryModule
+    CloudinaryModule,
   ],
-  providers: [],
+  providers: [AuthGuard, {
+    provide: HTTP_INTERCEPTORS ,
+    useClass: TokenInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
